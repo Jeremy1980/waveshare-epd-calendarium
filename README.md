@@ -5,8 +5,8 @@
 - Obsługa znaków zodiaku jest wzorowana na https://github.com/crusat/python-zodiac-sign
 ## Przyciski
 1. Uruchamia listę imienin dla dnia który aktualnie występuje w kalendarzu
-2. Uruchamia listę świat dla dnia który aktualnie występuje w kalendarzu
-3. Powoduje wyświelenie róznych informacji przypisanych do aktualnego dnia
+2. Uruchamia listę świąt dla dnia który aktualnie występuje w kalendarzu
+3. Powoduje wyświelenie różnych informacji, przypisanych do aktualnego dnia
 4. Powoduje zakończenie działania skryptu
 ### Efekt działania
 ![Kartka z kalendarza](/res/klawisz_1_oraz_klawisz_3.jpg)
