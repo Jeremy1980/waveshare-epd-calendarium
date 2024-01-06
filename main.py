@@ -73,7 +73,7 @@ def take_action(ident):
         _,_,bbox_w,bbox_h = draw.textbbox((0,0),str(current_date.day),font = font48)
         draw.text(((epd.width/2)-(bbox_w/2),h),str(current_date.day),font = font48,fill = 0)
 
-        holyday = holidays_s[0][0] if holidays_s else ""
+        holyday = holidays_s[0] if holidays_s else ""
         holyday +=  "\n"
         holyday +=  random.choice(holidays_un)
 
