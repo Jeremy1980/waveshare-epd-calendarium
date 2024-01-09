@@ -13,6 +13,8 @@ import json
 import random
 
 from datetime import datetime
+from zoneinfo import ZoneInfo
+
 from calendar import Calendar
 
 import numpy as np
@@ -82,13 +84,13 @@ def take_action(ident):
         draw.text(((epd.width/2)-(bbox_w/2),h),holyday,font = font12,fill = 0)
 
         sun_ref = sun(city.observer, date = current_date)
- 
+
         sun_status = sun_ref["sunrise"].strftime('%H:%M')
         sun_status +=  "\n"
         sun_status +=  sun_ref["dusk"].strftime('%H:%M')
 
         h +=  bbox_h
-        h +=  12 
+        h +=  12
         draw.text((2,h),sun_status,font = font22,fill = 0)
 
         sign_index = apptools.get_zodiac_sign(current_date,appconfig.sign_dates)
@@ -101,8 +103,8 @@ def take_action(ident):
             s +=  "%s %s\n"%(holyday[0].ljust(8),holyday[1])
 
         h +=  bbox_h
-        h +=  36 
-        draw.text((2,h),s,font = font12,fill = 0)      
+        h +=  36
+        draw.text((2,h),s,font = font12,fill = 0)
 
     if ident == "K2":
         h = 0
@@ -128,7 +130,7 @@ def take_action(ident):
 if __name__ == "__main__":
     print ("[%.4f]\tProcessing..."%(time.process_time()))
     # DateTime
-    current_date = datetime.now()    
+    current_date = datetime.now(tz=ZoneInfo("Europe/Warsaw"))
     month_name = appconfig.months[current_date.month-1]
 
     rootdir = "/home/pi"
@@ -188,8 +190,8 @@ if __name__ == "__main__":
         namedays.append(item[0])
 
     # Get upcoming holyday.
-    # This iterator will return all days for the month and all days before 
-    # the start of the month or after the end of the month that are required 
+    # This iterator will return all days for the month and all days before
+    # the start of the month or after the end of the month that are required
     # to get a complete week.
     next_holidays = []
     for next_date in Calendar().itermonthdates(current_date.year,current_date.month):
@@ -197,14 +199,14 @@ if __name__ == "__main__":
             if next_date.day > current_date.day:
                 try:
                     day_index = "%s%02d"%(month_name[0],next_date.day)
-                    
+
                     cc = calendarium[day_index]
                     if cc:
                         if len(cc['holidays_standard']):
                             next_holidays.append([next_date.strftime('%d/%m'),cc['holidays_standard'][0][0]])
                 except Exception as ex:
                     pass
-        
+
     next_holidays = next_holidays[:3]
 
     take_action("K3")
