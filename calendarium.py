@@ -133,6 +133,7 @@ if __name__ == "__main__":
     current_date = datetime.now(tz=ZoneInfo("Europe/Warsaw"))
     month_name = appconfig.months[current_date.month-1]
 
+    # The main directory from which files are loaded
     rootdir = "/home/pi"
 
     # Load database for current month
@@ -209,13 +210,31 @@ if __name__ == "__main__":
 
     next_holidays = next_holidays[:3]
 
-    take_action("K3")
+    y = 16
+    try:
+        inprogress_image = Image.open(os.path.join(rootdir,'pic','in-progress.jpg'))
+
+        x = int (epd.width/2-inprogress_image.size[0]/2)
+        Limage.paste(inprogress_image,(x,y))
+
+        y += inprogress_image.size[1]
+    except Exception as ex:
+        pass
+
+    msg = "Wating for key..."
+    _,_,bbox_w,bbox_h = draw.textbbox((0,0),msg,font = font22)
+
+    x = int (epd.width/2-bbox_w/2)
+    y += bbox_h
+    draw.text((x,y),msg,font = font22,fill = 0)
+
+    epd.display(epd.getbuffer(Limage))
+
     try:
         while keep_runing:
             pass
     except KeyboardInterrupt:
         keep_runing = False
-
 
     print ("[%.4f]\tDone."%(time.process_time()))
     quit()
