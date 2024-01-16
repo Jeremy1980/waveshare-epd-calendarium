@@ -136,15 +136,16 @@ if __name__ == "__main__":
     # The main directory from which files are loaded
     rootdir = "/home/pi"
 
-    # Load database for current month
-    with open (rootdir+"/calendarium.json","rt") as f:
-        calendarium = json.load(f)
 
     # Get data for today
     day_index = "%s%02d"%(month_name[0],current_date.day)
     try:
+        # Load database for current month
+        with open (rootdir+"/calendarium.json","rt") as f:
+            calendarium = json.load(f)
         calendarcard = calendarium[day_index]
-    except:
+    except Exception as ex:
+        print (ex)
         exit(-1)
 
     # Global boolean state
